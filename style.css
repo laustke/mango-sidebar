@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+    --base-clr: #f0f2f5;
+    --text-clr: #333;
+    --secondary-text-clr: #636363;
+    --card-background: white;
+    --sidebar-width: 250px;
+    --sidebar-background: white;
+    /* Original position of toggle button is (10px, 10px) */
+    --toggle-btn-padding: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+}
+
+html {
+    font-family: Poppins, sans-serif;
+    line-height: 1.5;
+}
+
+main {
+    padding-top: 30px;
+}
+
+main p {
+    color: var(--secondary-text-clr);
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.container {
+    background-color: var(--card-background);
+    border-radius: 0.7em;
+    margin: 20px;
+    padding: min(3em, 15%);
+}
+
+.container p {
+    margin-top: 1em;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+    width: var(--sidebar-width);
+    height: 100%;
+    background-color: var(--sidebar-background);
+    color: var(--text-clr);
+    z-index: 999;
+    /* Flexbox to center the content */
+    display: flex;
+    /* Centers horizontally */
+    justify-content: center;
+    padding-top: 20px;
+}
+
+#sidebar .sidebar-content p {
+    margin: 20px;
+}
+
+/* When the sidebar opens
+it slides from -250px to left=0 */
+#sidebar[aria-hidden="false"] {
+    left: 0;
+}
+
+/* General styles for sidebar toggle button */
+#sidebar-toggle-btn {
+    position: fixed;
+    top: var(--toggle-btn-padding);
+    left: var(--toggle-btn-padding);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    /* Ensure button is always on top */
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.5s ease-in-out;
+    outline: none;
+    flex-direction: column;
+}
+
+#sidebar-toggle-btn[aria-expanded="true"] {
+    /* Move the toggle button to the right edge of the sidebar */
+    left: calc(var(--sidebar-width) + var(--toggle-btn-padding));
+}
+
+/* Mobile specific styles */
+@media (max-width: 768px) {
+    #sidebar {
+        transition: left 0.5s ease-in-out;
+        /* Sidebar is hidden off-screen on mobile */
+        left: calc(-1 * var(--sidebar-width));
+    }
+
+    #sidebar[aria-hidden="false"] {
+        left: 0;
+    }
+
+    /* Ensure the toggle button is always visible on mobile */
+    #sidebar-toggle-btn {
+        display: flex;
+    }
+
+    main {
+        /* No margin on mobile */
+        margin-left: 0;
+    }
+}
+
+/* Desktop: Sidebar always visible */
+@media (min-width: 769px) {
+    #sidebar {
+        transition: none;
+        /* Sidebar always visible */
+        left: 0;
+    }
+
+    #sidebar-toggle-btn {
+        /* Hide the toggle button on desktop */
+        display: none;
+    }
+
+    main {
+        /* Push the content to the right,
+        sidebar is not supposed to cover it */
+        margin-left: var(--sidebar-width);
+    }
+}
+
+#sidebar-toggle-btn .icon-bar {
+    display: block;
+    width: 1.3rem;
+    height: 2px;
+    /* this defines spacing between bars */
+    margin: 2px;
+    background-color: var(--text-clr);
+    transition: 0.5s ease-in-out;
+}
+
+#sidebar-toggle-btn:is(:focus, :hover) .icon-bar {
+    background-color: #000;
+}
+
+#sidebar-toggle-btn[aria-expanded="true"]
+    .icon-bar:is(:first-child, :last-child) {
+    position: absolute;
+    margin: 0;
+    background-color: var(--base-clr);
+}
+
+#sidebar-toggle-btn[aria-expanded="true"] .icon-bar:first-child {
+    transform: rotate(45deg);
+}
+
+#sidebar-toggle-btn[aria-expanded="true"] .icon-bar:nth-child(2) {
+    opacity: 0;
+}
+
+#sidebar-toggle-btn[aria-expanded="true"] .icon-bar:last-child {
+    transform: rotate(-45deg);
+}
+
+/* Overlay */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 500; /* Make sure overlay is above the content but below the sidebar */
+    opacity: 0;
+    pointer-events: none; /* Ensure it's clickable only when visible */
+    transition: opacity 0.3s ease;
+}
+
+#overlay.darkened {
+    opacity: 1;
+    /* Allow interactions with the overlay when visible */
+    pointer-events: auto;
+}
