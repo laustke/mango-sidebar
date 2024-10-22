@@ -9,6 +9,10 @@
     --sidebar-background: white;
     /* Original position of toggle button is (10px, 10px) */
     --toggle-btn-padding: 10px;
+
+    --hover-bg-clr: #f4f4f4;
+    --hover-clr: #25396f;
+    --accent-clr: #0172ad;
 }
 
 * {
@@ -48,6 +52,8 @@ main p {
     margin-top: 1em;
 }
 
+/* #region Drawer */
+
 #sidebar {
     position: fixed;
     top: 0;
@@ -62,6 +68,9 @@ main p {
     /* Centers horizontally */
     justify-content: center;
     padding-top: 20px;
+
+    /* Enables vertical scrolling */
+    overflow-y: auto;
 }
 
 #sidebar .sidebar-content p {
@@ -191,4 +200,89 @@ it slides from -250px to left=0 */
     opacity: 1;
     /* Allow interactions with the overlay when visible */
     pointer-events: auto;
+}
+
+/* #endregion */
+
+#sidebar ul {
+    list-style: none;
+}
+
+#sidebar > ul > li.logo {
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+#sidebar a,
+#sidebar .dropdown-btn {
+    border-radius: 0.5em;
+    padding: 0.85em;
+    text-decoration: none;
+    color: var(--text-clr);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#sidebar .dropdown-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+#sidebar a span,
+#sidebar .dropdown-btn span {
+    flex-grow: 1;
+}
+
+#sidebar svg {
+    flex-shrink: 0;
+    fill: var(--text-clr);
+}
+
+#sidebar ul li.active a {
+    color: var(--accent-clr);
+    font-weight: 500;
+}
+#sidebar ul li.active a svg {
+    fill: var(--accent-clr);
+}
+
+#sidebar a:hover,
+#sidebar .dropdown-btn:hover {
+    background-color: var(--hover-bg-clr);
+    color: var(--hover-clr);
+    transition: background-color 0.3s;
+}
+
+#sidebar .submenu {
+    display: grid;
+    transition: 300ms ease-in-out;
+}
+
+#sidebar .submenu > div {
+    overflow: hidden;
+}
+
+#sidebar .submenu[aria-hidden="true"] {
+    grid-template-rows: 0fr;
+}
+
+#sidebar .submenu[aria-hidden="false"] {
+    grid-template-rows: 1fr;
+}
+
+#sidebar .dropdown-btn svg {
+    transition: 200ms;
+}
+
+#sidebar .dropdown-btn[aria-expanded="true"] svg:last-child {
+    rotate: 180deg;
+}
+
+#sidebar .submenu a {
+    padding-left: 2em;
 }
