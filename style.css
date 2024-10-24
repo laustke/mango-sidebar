@@ -204,6 +204,8 @@ it slides from -250px to left=0 */
 
 /* #endregion */
 
+/* #region Sidebar */
+
 #sidebar ul {
     list-style: none;
 }
@@ -287,3 +289,7 @@ it slides from -250px to left=0 */
 #sidebar .submenu a {
     padding-left: 2em;
 }
+
+/* #endregion */
+
+/* write your code below */
