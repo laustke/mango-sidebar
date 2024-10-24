@@ -6,3 +6,5 @@ This repository contains the code for the second part of my video tutorial on cr
 
 You can watch the [YouTube tutorial](https://www.youtube.com/watch?v=yLHGqF6gAK0) for a step-by-step explanation of how it works.
 
+<img src="https://laustke.github.io/mango-sidebar/MangoSidebar.gif" alt="mango-sidebar" width="400"/>
+
