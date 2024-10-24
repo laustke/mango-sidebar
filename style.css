@@ -231,6 +231,7 @@ it slides from -250px to left=0 */
     border: none;
     font: inherit;
     cursor: pointer;
+    outline: none;
 }
 
 #sidebar a span,

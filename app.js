@@ -69,3 +69,49 @@ const sidebar = document.getElementById("sidebar")
         }
     })
 })(sidebar)
+
+// Loop through each button and add a click event listener
+sidebar.querySelectorAll(".dropdown-btn").forEach(button => {
+    button.addEventListener("click", toggleSubMenu)
+})
+
+function toggleSubMenu(event) {
+    // 'event.currentTarget' always refers to the button
+    // that has the event listener
+
+    const dropdownBtn = event.currentTarget
+    const submenuIsOpen = dropdownBtn.getAttribute("aria-expanded") === "true"
+
+    // get submenu that is controlled by the clicked dropdown button
+    const controlledId = dropdownBtn.getAttribute("aria-controls")
+    const submenu = document.getElementById(controlledId)
+
+    closeOtherSubMenus(controlledId)
+
+    // this effectively toggles it
+    showSubmenu(submenu, !submenuIsOpen)
+}
+
+function showSubmenu(submenu, value) {
+    // show or hide the submenu, value is boolean
+
+    submenu.setAttribute("aria-hidden", !value)
+    // get dropdown button that controls this submenu
+    const button = sidebar.querySelector(
+        `.dropdown-btn[aria-controls="${submenu.id}"]`
+    )
+
+    button.setAttribute("aria-expanded", value)
+}
+
+function closeOtherSubMenus(submenuId) {
+    // Close all open submenus but this one
+    // When submenuId is undefined, closes all open submenus
+    sidebar
+        .querySelectorAll('.submenu[aria-hidden="false"]')
+        .forEach(submenu => {
+            if (submenu.id !== submenuId) {
+                showSubmenu(submenu, false)
+            }
+        })
+}
